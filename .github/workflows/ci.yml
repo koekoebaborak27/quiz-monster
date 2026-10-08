@@ -75,6 +75,5 @@ jobs:
       - name: Test
         run: pnpm test
 
-      # フレームワークを導入して package.json に build を追加したら、次を有効にする。
-      # - name: Build
-      #   run: pnpm build
+      - name: Build
+        run: pnpm build

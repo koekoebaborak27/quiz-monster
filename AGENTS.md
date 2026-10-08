@@ -1,6 +1,7 @@
-# <PROJECT_NAME> — エージェント向け方針（正本）
+# クイズモンスター — エージェント向け方針（正本）
 
-<PROJECT_SUMMARY: このプロジェクトが何をするものかを 2〜3 行で書く>
+小学4〜6年生向けの、3択クイズに答えてボスモンスターを倒す学習ゲーム。スマホで遊ぶ Web アプリ（PWA）で、1バトルは約1分。
+記録は端末の localStorage にだけ保存し、DB・ログイン・有料 API は使わない。
 
 本ファイルは Claude Code / Codex / GitHub Copilot すべてが読む**正本**。詳細は各サブディレクトリの AGENTS.md・`DESIGN.md`・`REVIEW.md` に委譲し、ここは薄く保つ。
 
@@ -35,17 +36,16 @@
 | `.codex/` | Codex CLI のプロジェクト設定（`config.toml`。サンドボックス / 承認ポリシー）+ 権限ルール（`rules/*.rules`） |
 | `.claude/` | Claude Code が読むスキル（`skills/<name>/SKILL.md`）+ サブエージェント（`agents/<name>.md`）+ 権限設定（`settings.json`） |
 | `.vscode/` | 推奨拡張機能 + Copilot の権限設定（`settings.json`） |
-| `prisma/` | （Prisma を採用する場合）スキーマ・マイグレーション・seed。規約は `@prisma/AGENTS.md`。使わないならフォルダごと削除する |
 
 ## ポイント
 
 > ここは**プロジェクトごとに書き換える節**。決まっていないうちは「未定」と書いておき、決まった時点で 1 行足す。
 
-- **技術スタック**: 言語 = TypeScript / Node.js（`.nvmrc` のバージョン）、パッケージマネージャ = pnpm、テスト = Vitest（単体）+ Playwright（画面）。フロントエンド = `<FRONTEND>`、バックエンド = `<BACKEND>`、DB = `<DATABASE>`。
+- **技術スタック**: 言語 = TypeScript / Node.js（`.nvmrc` のバージョン）、パッケージマネージャ = pnpm、テスト = Vitest（単体）+ Playwright（画面）。フロントエンド = Next.js（App Router）+ React、バックエンド = Next.js の Route Handlers（出題 API のみ）、DB = 使わない（端末の localStorage のみ）。
 - **アーキテクチャ**: 依存方向は `app → modules → shared` の一方向のみ。詳細 → `@src/AGENTS.md`
-- **CI は GitHub Actions**（lint / format / typecheck / test）。デプロイ先は `<DEPLOY_TARGET>`。
-- **ローカル開発の起動方法**をここに 1〜2 行で書く（例: `pnpm install` の後に `pnpm dev`。DB を使う場合は先に起動する）。
-- 認証・認可の方式が決まったらここに 1 行足す。
+- **CI は GitHub Actions**（lint / format / typecheck / test / build）。デプロイ先は Vercel（Hobby プラン）。
+- **ローカル開発の起動方法**: `pnpm install` の後に `pnpm dev`。ブラウザで http://localhost:3000 を開く。
+- **認証・認可**: 無し（ログインの仕組みを持たない）。
 
 ## 最小規約
 
@@ -69,6 +69,9 @@
 
 ```
 pnpm install        # 依存パッケージの取得
+pnpm dev            # 開発サーバーの起動（http://localhost:3000）
+pnpm build          # 本番用のビルド
+pnpm start          # ビルド結果の起動（先に pnpm build が必要）
 pnpm lint           # ESLint
 pnpm format:check   # Prettier チェック
 pnpm typecheck      # tsc --noEmit
@@ -76,7 +79,6 @@ pnpm test           # Vitest（単体）
 pnpm test:watch     # Vitest（監視）
 ```
 
-フレームワークを導入したら `dev` / `build` / `start` などをここへ追記する。
 
 ## 参照
 
@@ -87,7 +89,6 @@ pnpm test:watch     # Vitest（監視）
 - テスト方針（単体）: `TESTING.md`
 - エージェント権限ポリシー（許可 / 禁止コマンド）: `@docs/agent_permissions.md`
 - アーキテクチャ規約: `@src/AGENTS.md`
-- DB 規約（Prisma 採用時）: `@prisma/AGENTS.md`
 - 図（mermaid）の作成手順: `@docs/diagrams.md`
 - スキルの一覧と追加手順: `@docs/skills/README.md`
 
