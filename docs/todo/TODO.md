@@ -34,8 +34,8 @@
 **次のセッションが最初に打つコマンドまで具体的に書く。**
 
 ```powershell
-# feature/progress の Pull Request の CI 結果を確認する
-gh pr checks
+# feature/progress の Pull Request のレビュー・マージ状況を確認する
+gh pr view
 ```
 
 - [x] 1. 要件定義（→ [`docs/specs/`](../specs/README.md)。画面遷移図が必要な場合は [`docs/diagrams.md`](../diagrams.md) の手順に従いmermaidで描く）
@@ -78,8 +78,8 @@ gh pr checks
 | 項目 | 状態 |
 | --- | --- |
 | git 管理 | 作成済み（GitHub `koekoebaborak27/quiz-monster`、公開リポジトリ。`git remote -v` で確認） |
-| 作業ブランチ | `feature/progress`（Pull Request 作成済み） |
-| CI | `main` は成功。`feature/progress` の Pull Request は確認中（`gh pr checks`） |
+| 作業ブランチ | `feature/progress`（Pull Request 作成済み、未マージ） |
+| CI | `main` と `feature/progress` の Pull Request で成功（`gh pr checks`） |
 | ローカル環境 | 構築済み（`pnpm dev` で http://localhost:3000 に仮のトップページが出る） |
 | 出題API | 実装済み（`POST /api/questions`。画面は未実装） |
 | 本番 | 未構築 |
