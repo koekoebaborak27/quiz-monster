@@ -34,10 +34,10 @@
 **次のセッションが最初に打つコマンドまで具体的に書く。**
 
 ```powershell
-# 8. 実装の順番の 1 番目（quiz モジュール：問題データの読み込み・出題の選び方・入力の検証・出題API）から始める
+# 8. 実装の順番の 2 番目（progress モジュール：保存データの読み書き）から始める
 git switch main
 git pull
-git switch -c feature/quiz
+git switch -c feature/progress
 ```
 
 - [x] 1. 要件定義（→ [`docs/specs/`](../specs/README.md)。画面遷移図が必要な場合は [`docs/diagrams.md`](../diagrams.md) の手順に従いmermaidで描く）
@@ -56,6 +56,13 @@ git switch -c feature/quiz
 - [x] **6. git にリポジトリを作成する**（2026-10-08。GitHub で空のリポジトリを作り、手元から初回 push）→ [履歴](history/2026-10.md#2026-10-08-gitリポジトリの作成)
 - [x] **7. ローカル環境構築**（2026-10-08。Next.js の導入、ひな形の仮の値の修正、`prisma/` の削除、CI への build 追加、README の書き直し）→ [履歴](history/2026-10.md#2026-10-08-ローカル環境構築とnextjsの導入)・[補足](notes/local-env.md)
 - [ ] 8. 実装・単体ロジックテスト（1機能ずつ、[実装の順番](../specs/03_detail-design/README.md#実装の順番)に従う。→ [`create-vitest-test`](../skills/create-vitest-test.md)）
+  - [x] 8-1. `quiz`：問題データの読み込み・出題の選び方・入力の検証・出題API（2026-10-08。→ [履歴](history/2026-10.md#2026-10-08-quizモジュールと出題apiの実装)）
+  - [ ] 8-2. `progress`：保存データの読み書き
+  - [ ] 8-3. `boss`：ボス一覧・ボスの選び方・枠ランクの判定（画面以外）
+  - [ ] 8-4. `battle` の計算部分：`battle-reducer.ts`・`scoring.ts`・`api-client.ts`
+  - [ ] 8-5. `battle` の画面：`BattleSession` → ホーム → バトル → 結果、サウンド
+  - [ ] 8-6. `boss` の画面：ボス図鑑
+  - [ ] 8-7. PWA：manifest・Service Worker・オフライン用ページ
 - [ ] 9. 画面テスト（必要かどうかを判断する。必要な場合は [`create-unit-test-spec`](../skills/create-unit-test-spec.md) でテスト仕様書を作成したうえで [`playwright-evidence-test`](../skills/playwright-evidence-test.md) を行う）
 - [ ] 10. ユーザテスト（必要かどうかを判断する）
 
@@ -76,6 +83,7 @@ git switch -c feature/quiz
 | 作業ブランチ | `main` のみ（`git branch -a` で確認） |
 | CI | `main` で成功（`gh run list --limit 1` で確認） |
 | ローカル環境 | 構築済み（`pnpm dev` で http://localhost:3000 に仮のトップページが出る） |
+| 出題API | 実装済み（`POST /api/questions`。画面は未実装） |
 | 本番 | 未構築 |
 
 ## 完了済みの作業
