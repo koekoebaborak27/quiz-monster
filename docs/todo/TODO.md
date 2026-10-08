@@ -27,15 +27,16 @@
 | 3. 基本設計     | 3 / 3 |
 | 4. 詳細設計     | 1 / 1 |
 | 5. 設計のレビュー  | 1 / 1 |
-| 6〜10        | 0 / 5 |
+| 6〜10        | 1 / 5 |
 
 ## 次にやること
 
 **次のセッションが最初に打つコマンドまで具体的に書く。**
 
 ```powershell
-# 6 はまだ git 管理していないフォルダで始める。手順は gitの操作ルールに従う
-Get-Content docs/development/gitの操作ルール.md
+# 7. ローカル環境構築。Node.js は .nvmrc のバージョン（22）を使う
+node -v
+pnpm install
 ```
 
 - [x] 1. 要件定義（→ [`docs/specs/`](../specs/README.md)。画面遷移図が必要な場合は [`docs/diagrams.md`](../diagrams.md) の手順に従いmermaidで描く）
@@ -51,7 +52,7 @@ Get-Content docs/development/gitの操作ルール.md
   - [x] 3-3. `battle/05_画面イメージ.md` を基本設計へ移す（2026-10-08。→ [`battle/04_画面イメージ.md`](../specs/02_basic-design/battle/04_画面イメージ.md)）
 - [x] **4. 詳細設計**（2026-10-08。バトル進行の処理の分け方と BattleSession・先読みだけを作成。→ [`03_detail-design/`](../specs/03_detail-design/README.md)）→ [履歴](history/2026-10.md#2026-10-08-詳細設計書の作成)
 - [x] **5. 基本設計・詳細設計のレビュー**（2026-10-08。→ [`02_basic-design/`](../specs/02_basic-design/README.md)・[`03_detail-design/`](../specs/03_detail-design/README.md)）→ [履歴](history/2026-10.md#2026-10-08-基本設計と詳細設計のレビュー)
-- [ ] 6. git にリポジトリを作成する（→ [`gitの操作ルール.md`](../development/gitの操作ルール.md)）
+- [x] **6. git にリポジトリを作成する**（2026-10-08。GitHub で空のリポジトリを作り、手元から初回 push）→ [履歴](history/2026-10.md#2026-10-08-gitリポジトリの作成)
 - [ ] 7. ローカル環境構築（DB は使わない）
 - [ ] 8. 実装・単体ロジックテスト（1機能ずつ、[実装の順番](../specs/03_detail-design/README.md#実装の順番)に従う。→ [`create-vitest-test`](../skills/create-vitest-test.md)）
 - [ ] 9. 画面テスト（必要かどうかを判断する。必要な場合は [`create-unit-test-spec`](../skills/create-unit-test-spec.md) でテスト仕様書を作成したうえで [`playwright-evidence-test`](../skills/playwright-evidence-test.md) を行う）
@@ -69,8 +70,9 @@ Get-Content docs/development/gitの操作ルール.md
 
 | 項目 | 状態 |
 | --- | --- |
-| git 管理 | 未作成 |
-| 作業ブランチ | なし（git 管理の開始前） |
+| git 管理 | 作成済み（GitHub `koekoebaborak27/quiz-monster`、公開リポジトリ。`git remote -v` で確認） |
+| 作業ブランチ | `main` のみ（`git branch -a` で確認） |
+| CI | `main` で成功（`gh run list --limit 1` で確認） |
 | ローカル環境 | <未構築 / 構築済み> |
 | 本番 | <未構築 / 稼働中> |
 
@@ -85,3 +87,4 @@ Get-Content docs/development/gitの操作ルール.md
 | 基本設計 | 3 | [`2026-10.md`](history/2026-10.md) |
 | 詳細設計 | 1 | [`2026-10.md`](history/2026-10.md) |
 | 設計のレビュー | 1 | [`2026-10.md`](history/2026-10.md) |
+| git リポジトリ作成 | 1 | [`2026-10.md`](history/2026-10.md) |
