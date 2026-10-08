@@ -27,16 +27,17 @@
 | 3. 基本設計     | 3 / 3 |
 | 4. 詳細設計     | 1 / 1 |
 | 5. 設計のレビュー  | 1 / 1 |
-| 6〜10        | 1 / 5 |
+| 6〜10        | 2 / 5 |
 
 ## 次にやること
 
 **次のセッションが最初に打つコマンドまで具体的に書く。**
 
 ```powershell
-# 7. ローカル環境構築。Node.js は .nvmrc のバージョン（22）を使う
-node -v
-pnpm install
+# 8. 実装の順番の 1 番目（quiz モジュール：問題データの読み込み・出題の選び方・入力の検証・出題API）から始める
+git switch main
+git pull
+git switch -c feature/quiz
 ```
 
 - [x] 1. 要件定義（→ [`docs/specs/`](../specs/README.md)。画面遷移図が必要な場合は [`docs/diagrams.md`](../diagrams.md) の手順に従いmermaidで描く）
@@ -53,7 +54,7 @@ pnpm install
 - [x] **4. 詳細設計**（2026-10-08。バトル進行の処理の分け方と BattleSession・先読みだけを作成。→ [`03_detail-design/`](../specs/03_detail-design/README.md)）→ [履歴](history/2026-10.md#2026-10-08-詳細設計書の作成)
 - [x] **5. 基本設計・詳細設計のレビュー**（2026-10-08。→ [`02_basic-design/`](../specs/02_basic-design/README.md)・[`03_detail-design/`](../specs/03_detail-design/README.md)）→ [履歴](history/2026-10.md#2026-10-08-基本設計と詳細設計のレビュー)
 - [x] **6. git にリポジトリを作成する**（2026-10-08。GitHub で空のリポジトリを作り、手元から初回 push）→ [履歴](history/2026-10.md#2026-10-08-gitリポジトリの作成)
-- [ ] 7. ローカル環境構築（DB は使わない）
+- [x] **7. ローカル環境構築**（2026-10-08。Next.js の導入、ひな形の仮の値の修正、`prisma/` の削除、CI への build 追加、README の書き直し）→ [履歴](history/2026-10.md#2026-10-08-ローカル環境構築とnextjsの導入)・[補足](notes/local-env.md)
 - [ ] 8. 実装・単体ロジックテスト（1機能ずつ、[実装の順番](../specs/03_detail-design/README.md#実装の順番)に従う。→ [`create-vitest-test`](../skills/create-vitest-test.md)）
 - [ ] 9. 画面テスト（必要かどうかを判断する。必要な場合は [`create-unit-test-spec`](../skills/create-unit-test-spec.md) でテスト仕様書を作成したうえで [`playwright-evidence-test`](../skills/playwright-evidence-test.md) を行う）
 - [ ] 10. ユーザテスト（必要かどうかを判断する）
@@ -62,7 +63,8 @@ pnpm install
 
 いずれも**期限のない宿題**。判断材料は各リンク先にまとめる。
 
-- [ ] <いつかやること>
+- [ ] ESLint を 10 へ上げる。9 系はサポートが終わっている（`pnpm install` で `deprecated eslint@9` の警告が出る）。`eslint-config-next`・`typescript-eslint` も合わせて上げる必要があるので、単独の PR にする
+- [ ] `main` のブランチ保護ルールを設定する（いまは未設定。→ [履歴](history/2026-10.md#2026-10-08-gitリポジトリの作成)）
 
 ## 現在の状態
 
@@ -73,8 +75,8 @@ pnpm install
 | git 管理 | 作成済み（GitHub `koekoebaborak27/quiz-monster`、公開リポジトリ。`git remote -v` で確認） |
 | 作業ブランチ | `main` のみ（`git branch -a` で確認） |
 | CI | `main` で成功（`gh run list --limit 1` で確認） |
-| ローカル環境 | <未構築 / 構築済み> |
-| 本番 | <未構築 / 稼働中> |
+| ローカル環境 | 構築済み（`pnpm dev` で http://localhost:3000 に仮のトップページが出る） |
+| 本番 | 未構築 |
 
 ## 完了済みの作業
 
@@ -88,3 +90,4 @@ pnpm install
 | 詳細設計 | 1 | [`2026-10.md`](history/2026-10.md) |
 | 設計のレビュー | 1 | [`2026-10.md`](history/2026-10.md) |
 | git リポジトリ作成 | 1 | [`2026-10.md`](history/2026-10.md) |
+| ローカル環境構築 | 1 | [`2026-10.md`](history/2026-10.md) |
