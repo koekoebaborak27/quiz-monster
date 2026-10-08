@@ -34,8 +34,10 @@
 **次のセッションが最初に打つコマンドまで具体的に書く。**
 
 ```powershell
-# feature/progress の Pull Request のレビュー・マージ状況を確認する
-gh pr view
+# 8. 実装の順番の 3 番目（boss モジュール：ボス一覧・ボスの選び方・枠ランクの判定。画面以外）から始める
+git switch main
+git pull
+git switch -c feature/boss
 ```
 
 - [x] 1. 要件定義（→ [`docs/specs/`](../specs/README.md)。画面遷移図が必要な場合は [`docs/diagrams.md`](../diagrams.md) の手順に従いmermaidで描く）
@@ -78,10 +80,11 @@ gh pr view
 | 項目 | 状態 |
 | --- | --- |
 | git 管理 | 作成済み（GitHub `koekoebaborak27/quiz-monster`、公開リポジトリ。`git remote -v` で確認） |
-| 作業ブランチ | `feature/progress`（Pull Request 作成済み、未マージ） |
-| CI | `main` と `feature/progress` の Pull Request で成功（`gh pr checks`） |
+| 作業ブランチ | `main` のみ（`git branch -a` で確認） |
+| CI | `main` で成功（`gh run list --limit 1` で確認） |
 | ローカル環境 | 構築済み（`pnpm dev` で http://localhost:3000 に仮のトップページが出る） |
 | 出題API | 実装済み（`POST /api/questions`。画面は未実装） |
+| 保存データ（progress） | 実装済み（localStorage の読み書き。画面からはまだ使っていない） |
 | 本番 | 未構築 |
 
 ## 完了済みの作業
