@@ -9,10 +9,9 @@
     // --- 許可 ---
     "/^pnpm (install|lint|format:check|typecheck)\\b/": true,
     "/^pnpm test(:[\\w:-]+)?\\b/": true,
+    "/^pnpm build\\b/": true,
     "/^git (status|diff|log|show|branch)\\b/": true,
 
-    // フレームワークを導入したら次の行を有効にする（build を許可する）。
-    // "/^pnpm build\\b/": true,
     // ローカル DB を Docker で動かす場合は次の行を有効にする。
     // "/^docker compose -f docker\\/docker-compose\\.yml (up|ps|logs)\\b/": true,
     // Prisma を採用する場合は次の行を有効にする。

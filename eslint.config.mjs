@@ -1,15 +1,23 @@
-import tseslint from "typescript-eslint";
+import nextVitals from "eslint-config-next/core-web-vitals";
+import nextTs from "eslint-config-next/typescript";
 import prettier from "eslint-config-prettier";
 
-// ESLint の設定。フレームワークを導入したら、その公式 config を先頭へ足す。
-//   例（Next.js）: import next from "eslint-config-next"; → const config = [...next, ...]
+// ESLint の設定。Next.js の公式ルール（表示速度に関わる書き方の注意と TypeScript 用のルール）を土台にする。
 /** @type {import("eslint").Linter.Config[]} */
 const config = [
-  ...tseslint.configs.recommended,
+  ...nextVitals,
+  ...nextTs,
   // Prettier と競合する整形系ルールを無効化（format は Prettier に一任）
   prettier,
   {
-    ignores: ["node_modules/**", "coverage/**", "playwright.config.ts", "e2e/**"],
+    ignores: [
+      "node_modules/**",
+      "coverage/**",
+      ".next/**",
+      "next-env.d.ts",
+      "playwright.config.ts",
+      "e2e/**",
+    ],
   },
 ];
 

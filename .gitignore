@@ -53,3 +53,8 @@ docs/test/unit/result/*
 
 # === TypeScript ===
 *.tsbuildinfo
+
+# === Next.js / Vercel ===
+.next/
+next-env.d.ts
+.vercel/
