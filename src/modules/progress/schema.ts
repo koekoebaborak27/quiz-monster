@@ -1,11 +1,10 @@
 import { z } from "zod";
-import { KNOWN_BOSS_IDS, type Level, type Progress } from "./types";
+import type { Level, Progress } from "./types";
 
 /** localStorage に保存するデータの現在の版。 */
 export const CURRENT_VERSION = 1;
 
 const objectSchema = z.record(z.string(), z.unknown());
-const bossIdSchema = z.enum(KNOWN_BOSS_IDS);
 const nonNegativeIntegerSchema = z.number().int().nonnegative();
 const positiveIntegerSchema = z.number().int().positive();
 
@@ -49,14 +48,15 @@ function readCurrentProgress(data: Record<string, unknown>): Progress {
   const bossKills: Progress["bossKills"] = {};
   if (rawKills.success) {
     for (const [bossId, count] of Object.entries(rawKills.data)) {
-      const validBossId = bossIdSchema.safeParse(bossId);
+      // ボスの一覧に無いIDでも捨てない（一覧の変更で撃破回数が消えないようにする。図鑑側で無視する）。
       const validCount = positiveIntegerSchema.safeParse(count);
-      if (!validBossId.success || !validCount.success) continue;
-      bossKills[validBossId.data] = validCount.data;
+      if (!validCount.success) continue;
+      bossKills[bossId] = validCount.data;
     }
   }
 
-  const lastBossId = bossIdSchema.nullable().safeParse(data.lastBossId);
+  // ボスの一覧に無いIDでもそのまま返す。一覧に無いときは boss モジュールが null と同じに扱う。
+  const lastBossId = z.string().nullable().safeParse(data.lastBossId);
   const perfectCount = nonNegativeIntegerSchema.safeParse(data.perfectCount);
   const soundOn = z.boolean().safeParse(data.soundOn);
 

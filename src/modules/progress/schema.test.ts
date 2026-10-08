@@ -37,8 +37,8 @@ describe("progress/schema parseProgress", () => {
           version: 1,
           wrongIds: ["q1", 4, "q1", ""],
           recentIds: { "1": ["q2", null], "2": "壊れた値", "3": ["q3"] },
-          lastBossId: "unknown-boss",
-          bossKills: { "ukkari-tako": 2, "unknown-boss": 4, "hikkake-oni": -1 },
+          lastBossId: 123,
+          bossKills: { "ukkari-tako": 2, "hikkake-oni": -1, "awate-zame": 1.5 },
           perfectCount: "2",
           soundOn: false,
         }),
@@ -51,6 +51,16 @@ describe("progress/schema parseProgress", () => {
         perfectCount: 0,
         soundOn: false,
       });
+    });
+
+    it("ボスの一覧に無いIDも捨てずに残す（扱いは boss モジュールが決める）", () => {
+      const progress = parseProgress({
+        version: 1,
+        lastBossId: "unknown-boss",
+        bossKills: { "unknown-boss": 4 },
+      });
+      expect(progress?.lastBossId).toBe("unknown-boss");
+      expect(progress?.bossKills).toEqual({ "unknown-boss": 4 });
     });
 
     it("最近出た問題は重複を除いて新しい20件だけ残す", () => {

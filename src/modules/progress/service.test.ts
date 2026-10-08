@@ -57,17 +57,40 @@ describe("progress/service loadProgress", () => {
 });
 
 describe("progress/service recordFirstAnswer", () => {
-  describe("最初の解答が正解または不正解のとき", () => {
-    it("不正解だけを重複させずに保存する", async () => {
+  describe("最初の解答が不正解のとき", () => {
+    it("末尾へ加え、すでにあれば重複させない", async () => {
       const storage = useStorage();
       const service = await loadService();
 
       service.recordFirstAnswer("q1", false);
+      service.recordFirstAnswer("q2", false);
       service.recordFirstAnswer("q1", false);
-      service.recordFirstAnswer("q2", true);
 
-      expect(service.loadProgress().wrongIds).toEqual(["q1"]);
-      expect(JSON.parse(storage.getValue() ?? "").wrongIds).toEqual(["q1"]);
+      expect(service.loadProgress().wrongIds).toEqual(["q1", "q2"]);
+      expect(JSON.parse(storage.getValue() ?? "").wrongIds).toEqual(["q1", "q2"]);
+    });
+  });
+
+  describe("最初の解答が正解のとき", () => {
+    it("まちがえた問題から外す", async () => {
+      const storage = useStorage();
+      const service = await loadService();
+
+      service.recordFirstAnswer("q1", false);
+      service.recordFirstAnswer("q2", false);
+      service.recordFirstAnswer("q1", true);
+
+      expect(service.loadProgress().wrongIds).toEqual(["q2"]);
+      expect(JSON.parse(storage.getValue() ?? "").wrongIds).toEqual(["q2"]);
+    });
+
+    it("まちがえた問題に無ければ何も変えない", async () => {
+      useStorage();
+      const service = await loadService();
+
+      service.recordFirstAnswer("q1", true);
+
+      expect(service.loadProgress().wrongIds).toEqual([]);
     });
   });
 });

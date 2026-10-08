@@ -1,6 +1,6 @@
 import { createInitialProgress } from "./schema";
 import { ProgressStorageError, readProgress, writeProgress } from "./storage";
-import type { BossId, Level, Progress } from "./types";
+import type { Level, Progress } from "./types";
 
 let memoryProgress = createInitialProgress();
 let storageAvailable: boolean | null = null;
@@ -66,14 +66,20 @@ export function loadProgress(): Progress {
   return refreshProgress();
 }
 
-/** 最初の解答が不正解なら、問題IDを重複させずに記録する。 */
+/**
+ * 各問題への最初の解答を「まちがえた問題」に反映する。
+ * 正解ならその問題を外し、不正解なら末尾へ加える（すでにあれば何もしない）。
+ */
 export function recordFirstAnswer(questionId: string, isCorrect: boolean): void {
-  if (isCorrect) return;
-  updateProgress((progress) =>
-    progress.wrongIds.includes(questionId)
+  updateProgress((progress) => {
+    // 正解した問題は覚えられたとみなし、リベンジの対象から外す。
+    if (isCorrect) {
+      return { ...progress, wrongIds: progress.wrongIds.filter((id) => id !== questionId) };
+    }
+    return progress.wrongIds.includes(questionId)
       ? progress
-      : { ...progress, wrongIds: [...progress.wrongIds, questionId] },
-  );
+      : { ...progress, wrongIds: [...progress.wrongIds, questionId] };
+  });
 }
 
 /** 難易度ごとの最近出た問題を古い順に保ち、直近20件だけ残す。 */
@@ -89,12 +95,12 @@ export function recordRecentIds(level: Level, ids: string[]): void {
 }
 
 /** 次のバトルで避けるボスIDを記録する。 */
-export function recordLastBoss(bossId: BossId): void {
+export function recordLastBoss(bossId: string): void {
   updateProgress((progress) => ({ ...progress, lastBossId: bossId }));
 }
 
 /** 勝利数を増やし、パーフェクト勝利ならその回数も増やす。 */
-export function recordBattleWin(bossId: BossId, isPerfect: boolean): void {
+export function recordBattleWin(bossId: string, isPerfect: boolean): void {
   updateProgress((progress) => ({
     ...progress,
     bossKills: { ...progress.bossKills, [bossId]: (progress.bossKills[bossId] ?? 0) + 1 },

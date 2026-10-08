@@ -8,4 +8,4 @@ export {
   setSoundOn,
   isStorageAvailable,
 } from "./service";
-export type { BossId, Level, Progress } from "./types";
+export type { Level, Progress } from "./types";
