@@ -34,6 +34,7 @@ export function createInitialState(): BattleState {
     normalWrong: [],
     reviewList: [],
     finishDamage: 0,
+    lastDamage: 0,
   };
 }
 
@@ -107,10 +108,13 @@ function answer(state: BattleState, choiceId: ChoiceId): BattleState {
     if (state.slot === LAST_SLOT) {
       return { ...base, phase: "finishing", finishDamage: state.hp, hp: 0, combo: state.combo + 1 };
     }
+    const hp = isFinish ? hpAfterFinishFirstHit(state.hp) : hpAfterNormalHit(state.hp);
     return {
       ...base,
       phase: "correct",
-      hp: isFinish ? hpAfterFinishFirstHit(state.hp) : hpAfterNormalHit(state.hp),
+      hp,
+      // 画面に大きく出すため、減った分のHPをダメージとして覚えておく。
+      lastDamage: state.hp - hp,
       combo: state.combo + 1,
     };
   }
