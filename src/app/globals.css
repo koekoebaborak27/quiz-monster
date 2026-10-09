@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+/*
+ * デザインの値の正本。色の名前は DESIGN.md の表と同じにする。
+ * `bg-bg` `text-fg-muted` のように名前で使い、画面の側には色コードを直接書かない。
+ */
+@theme {
+  --color-bg: #1b1b1b;
+  --color-surface: #262626;
+  --color-surface-2: #8a8a8a;
+  --color-fg: #ececec;
+  --color-fg-muted: #b9b9b9;
+  --color-border: #444444;
+  --color-primary: #2f7fd8;
+  --color-label: #6aa7f0;
+  --color-hp: #d13b3b;
+  --color-track: #0f0f0f;
+  --color-life: #f07c7c;
+  --color-combo: #e8a020;
+  --color-finish: #ffd24a;
+  --color-correct: #3fbf7f;
+  --color-correct-bg: #163a28;
+  --color-wrong: #ee8888;
+  --color-boss: #251f55;
+  --color-boss-angry: #b02a2a;
+  --color-angry-bg: #3a1414;
+  --color-bronze: #b06a35;
+  --color-silver: #b8bcc4;
+  --color-gold: #e0b020;
+
+  --font-sans: var(--font-noto-sans-jp), sans-serif;
+
+  /* 怒りモードのボスを小刻みに震わせる動き。 */
+  --animate-shake: shake 0.3s linear infinite;
+  @keyframes shake {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-2px);
+    }
+    75% {
+      transform: translateX(2px);
+    }
+  }
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+}
+
+/* 端末の「視差効果を減らす」設定が有効なら、震えを止める（色と文字の変化は残す）。 */
+@media (prefers-reduced-motion: reduce) {
+  .animate-shake {
+    animation: none;
+  }
+}

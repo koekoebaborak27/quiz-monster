@@ -16,6 +16,7 @@ export {
 } from "./scoring";
 export { buildBattleResult } from "./battle-result";
 export { BattleSessionProvider } from "./session";
+export { HomeScreen } from "./ui/home-screen";
 export { fetchQuestions, toFetchError } from "./api-client";
 export type { FetchQuestionsResult } from "./api-client";
 export type { Evaluation } from "./scoring";
