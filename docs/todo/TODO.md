@@ -27,17 +27,17 @@
 | 3. 基本設計     | 3 / 3 |
 | 4. 詳細設計     | 1 / 1 |
 | 5. 設計のレビュー  | 1 / 1 |
-| 6〜10        | 2 / 5 |
+| 6〜10        | 3 / 5 |
 
 ## 次にやること
 
 **次のセッションが最初に打つコマンドまで具体的に書く。**
 
 ```powershell
-# 8. 実装の順番の 7 番目（PWA：manifest・Service Worker・オフライン用ページ）から始める。8-6 の PR がマージ済みであること
+# 9. 画面テストが必要かを決める（必要なら仕様書づくりから）。8-7 の PR がマージ済みであること
 git switch main
 git pull
-git switch -c feature/pwa
+git switch -c feature/e2e-spec
 ```
 
 - [x] 1. 要件定義（→ [`docs/specs/`](../specs/README.md)。画面遷移図が必要な場合は [`docs/diagrams.md`](../diagrams.md) の手順に従いmermaidで描く）
@@ -55,20 +55,23 @@ git switch -c feature/pwa
 - [x] **5. 基本設計・詳細設計のレビュー**（2026-10-08。→ [`02_basic-design/`](../specs/02_basic-design/README.md)・[`03_detail-design/`](../specs/03_detail-design/README.md)）→ [履歴](history/2026-10.md#2026-10-08-基本設計と詳細設計のレビュー)
 - [x] **6. git にリポジトリを作成する**（2026-10-08。GitHub で空のリポジトリを作り、手元から初回 push）→ [履歴](history/2026-10.md#2026-10-08-gitリポジトリの作成)
 - [x] **7. ローカル環境構築**（2026-10-08。Next.js の導入、ひな形の仮の値の修正、`prisma/` の削除、CI への build 追加、README の書き直し）→ [履歴](history/2026-10.md#2026-10-08-ローカル環境構築とnextjsの導入)・[補足](notes/local-env.md)
-- [ ] 8. 実装・単体ロジックテスト（1機能ずつ、[実装の順番](../specs/03_detail-design/README.md#実装の順番)に従う。→ [`create-vitest-test`](../skills/create-vitest-test.md)）
+- [x] 8. 実装・単体ロジックテスト（1機能ずつ、[実装の順番](../specs/03_detail-design/README.md#実装の順番)に従う。→ [`create-vitest-test`](../skills/create-vitest-test.md)）
   - [x] 8-1. `quiz`：問題データの読み込み・出題の選び方・入力の検証・出題API（2026-10-08。→ [履歴](history/2026-10.md#2026-10-08-quizモジュールと出題apiの実装)）
   - [x] 8-2. `progress`：保存データの読み書き（2026-10-08。→ [履歴](history/2026-10.md#2026-10-08-progressモジュールと保存データの読み書き)）
   - [x] 8-3. `boss`：ボス一覧・ボスの選び方・枠ランクの判定（画面以外）（2026-10-09。→ [履歴](history/2026-10.md#2026-10-09-bossモジュールのボス一覧選び方枠ランク)）
   - [x] 8-4. `battle` の計算部分：`battle-reducer.ts`・`scoring.ts`・`api-client.ts`（2026-10-09。→ [履歴](history/2026-10.md#2026-10-09-battleモジュールの計算部分)）
   - [x] 8-5. `battle` の画面：`BattleSession` → ホーム → バトル → 結果、サウンド（2026-10-09。→ [履歴](history/2026-10.md#2026-10-09-battleモジュールの画面)）
   - [x] 8-6. `boss` の画面：ボス図鑑（2026-10-09。→ [履歴](history/2026-10.md#2026-10-09-bossモジュールのボス図鑑の画面)）
-  - [ ] 8-7. PWA：manifest・Service Worker・オフライン用ページ
+  - [x] 8-7. PWA：manifest・Service Worker・オフライン用ページ（2026-10-09。→ [履歴](history/2026-10.md#2026-10-09-pwa)）
 - [ ] 9. 画面テスト（必要かどうかを判断する。必要な場合は [`create-unit-test-spec`](../skills/create-unit-test-spec.md) でテスト仕様書を作成したうえで [`playwright-evidence-test`](../skills/playwright-evidence-test.md) を行う）
 - [ ] 10. ユーザテスト（必要かどうかを判断する）
 
 ## 残っているタスク
 
 いずれも**期限のない宿題**。判断材料は各リンク先にまとめる。
+
+- [ ] PWA のアイコンを本物に差し替える。`public/icons/icon-192.png`（192×192）・`icon-512.png`（512×512、絵柄は中央の約8割）を同じ名前で置き換える。いまは仮の絵
+- [ ] 本番ビルドを実機（スマホの Chrome など）で開き、ホーム画面に追加できること・機内モードで開くと「インターネットにつないでね」が出ることを確かめる
 
 - [ ] ESLint を 10 へ上げる。9 系はサポートが終わっている（`pnpm install` で `deprecated eslint@9` の警告が出る）。`eslint-config-next`・`typescript-eslint` も合わせて上げる必要があるので、単独の PR にする
 - [ ] `main` のブランチ保護ルールを設定する（いまは未設定。→ [履歴](history/2026-10.md#2026-10-08-gitリポジトリの作成)）
@@ -88,6 +91,7 @@ git switch -c feature/pwa
 | ボス（boss） | 実装済み（ボス一覧・`pickBoss`・`getRank`・`getZukanNotice`・`countDefeatedBosses`・`BossCircle`）。ボス図鑑の画面（`BossZukanScreen`・`/zukan`）も実装済み |
 | バトルの画面（battle） | ホーム（`/`）・バトル（`/battle`）・結果（`/result`）・音を実装済み。ブラウザで通しで遊べる（PWA は未実装） |
 | デザインの土台 | Tailwind v4・`globals.css`（色の正本）・`cn()`・`lucide-react`・`next/font` を導入済み |
+| PWA | manifest・`public/sw.js`・`public/offline.html`・アイコン（**仮の絵**。オーナーが用意する本物に差し替える）を実装済み。`sw.js` は単体テストで確認。実機での登録・オフライン表示は未確認 |
 | 本番 | 未構築 |
 
 ## 完了済みの作業
