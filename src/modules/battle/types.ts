@@ -56,3 +56,24 @@ export type BattleEffect =
   | { type: "playSound"; kind: "correct" | "wrong" }
   | { type: "recordFirstAnswer"; questionId: string; isCorrect: boolean }
   | { type: "recordBattleWin"; bossId: string; isPerfect: boolean };
+
+/**
+ * 結果画面に出す値。バトルが「とどめの一撃」になったときに作り、BattleSession に置く。
+ * 項目の意味は基本設計「結果画面の表示」の「結果の作り方」の表のとおり。
+ */
+export type BattleResult = {
+  /** 「もう1回」で同じ条件にするために持つ（mode・level）。 */
+  start: BattleStart;
+  boss: Boss;
+  /** 残りライフ（評価の基準）。 */
+  life: number;
+  /** 撃破回数（更新の前と後）。 */
+  killCountBefore: number;
+  killCountAfter: number;
+  /** パーフェクト勝利の更新後の回数。 */
+  perfectCount: number;
+  /** ふりかえりに出す問題。 */
+  reviewList: Question[];
+  /** リベンジモードで、更新後の「まちがえた問題」が5問未満になったか。通常モードは常に false。 */
+  revengeCleared: boolean;
+};
