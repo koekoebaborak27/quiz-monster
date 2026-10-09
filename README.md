@@ -16,7 +16,7 @@
 | 結果 | `/result` | バトルの結果と、勝ち方の評価を表示する |
 | ボス図鑑 | `/zukan` | 倒したボスと撃破回数を見る |
 
-ホーム・バトル・結果の画面は実装済みで、ブラウザで通しで遊べます（音つき）。ボス図鑑（`/zukan`）と PWA はまだ実装していません。画面の配置は [`docs/specs/mock/screens.html`](docs/specs/mock/screens.html)、仕様は [`docs/specs/`](docs/specs/README.md) にあります。
+ホーム・バトル・結果の画面は実装済みで、ブラウザで通しで遊べます（音つき）。ボス図鑑（`/zukan`）も実装済みです。PWA はまだ実装していません。画面の配置は [`docs/specs/mock/screens.html`](docs/specs/mock/screens.html)、仕様は [`docs/specs/`](docs/specs/README.md) にあります。
 
 ## セットアップ
 
