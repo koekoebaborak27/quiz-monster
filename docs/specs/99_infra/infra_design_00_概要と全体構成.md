@@ -23,7 +23,7 @@
 | Application Preset | Next.js（自動検出） |
 | Root Directory | `./` |
 | Build / Output / Install Command | 既定のまま（上書きしない）。Install は `pnpm-lock.yaml` から `pnpm install` が選ばれる |
-| Node.js Version | 画面（Settings → Build and Deployment）では 22.x にした。ただし `package.json` の `engines`（`>=22.12.0`）が優先されるようで、ビルドログに「新しいメジャー版が出ると自動で上がる」警告が出る。実際の版は 22 より新しい可能性がある（動作に問題は出ていない） |
+| Node.js Version | `package.json` の `engines.node`（`24.x`）で決まる。`.nvmrc`（24）・CI・本番がすべて 24 で揃っている（2026-10-09 に 22 から更新）。画面（Settings → Build and Deployment）の設定より `engines` が優先されるため、`engines` を直す。`>=` の範囲指定にすると新しいメジャー版へ自動で上がる |
 | Environment Variables | 設定しない |
 
 ## 構築手順の記録
