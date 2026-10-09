@@ -26,3 +26,14 @@ export function getZukanNotice(killCountBefore: number): ZukanNotice | null {
     return { kind: "rankUp", rank: after };
   return null;
 }
+
+/**
+ * 撃破済み（1回以上倒した）ボスの数を数える。ホームと図鑑の収集率に使う。
+ * 保存データにボス一覧に無いIDが残っていても、数に入れない。
+ */
+export function countDefeatedBosses(
+  bossKills: Record<string, number>,
+  bossIds: readonly string[],
+): number {
+  return bossIds.filter((id) => (bossKills[id] ?? 0) >= 1).length;
+}

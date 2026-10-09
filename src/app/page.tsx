@@ -1,5 +1,6 @@
-// トップページ（仮）。
-// ローカル環境で Next.js が動くことを確かめるためだけに置いている。TODO 8 でホーム画面（HomeScreen）に置き換える。
+import { HomeScreen } from "@/modules/battle";
+
+// ホーム（/）。画面の中身は battle モジュールの HomeScreen に任せる。
 export default function Page() {
-  return <h1>クイズモンスター</h1>;
+  return <HomeScreen />;
 }

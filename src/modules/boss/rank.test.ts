@@ -4,7 +4,7 @@
  * 2. 結果画面のお知らせ（新規登録・ランクアップ・表示なし）を、撃破回数の更新前の値から決めること
  */
 import { describe, it, expect } from "vitest";
-import { getRank, getZukanNotice } from "./rank";
+import { countDefeatedBosses, getRank, getZukanNotice } from "./rank";
 
 describe("boss/rank getRank", () => {
   describe("撃破回数が0回のとき", () => {
@@ -49,5 +49,21 @@ describe("boss/rank getZukanNotice", () => {
     it.each([1, 3, 5, 6, 100])("更新前が%i回なら、何も出さない（null）", (n) => {
       expect(getZukanNotice(n)).toBeNull();
     });
+  });
+});
+
+describe("boss/rank countDefeatedBosses", () => {
+  const ids = ["a", "b", "c"];
+
+  it("1回以上倒したボスだけを数える", () => {
+    expect(countDefeatedBosses({ a: 1, b: 0, c: 5 }, ids)).toBe(2);
+  });
+
+  it("保存データに無いボスは未撃破として数えない", () => {
+    expect(countDefeatedBosses({}, ids)).toBe(0);
+  });
+
+  it("ボス一覧に無いIDの記録は数に入れない", () => {
+    expect(countDefeatedBosses({ a: 1, zzz: 9 }, ids)).toBe(1);
   });
 });
