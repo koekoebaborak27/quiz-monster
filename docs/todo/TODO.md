@@ -34,10 +34,13 @@
 **次のセッションが最初に打つコマンドまで具体的に書く。**
 
 ```powershell
-# 9. 画面テストが必要かを決める（必要なら仕様書づくりから）。8-7 の PR がマージ済みであること
+# オーナーが PWA アイコンを差し替える（コード変更なので PR にする）。192×192 と 512×512 の PNG を同じ名前で置く
 git switch main
 git pull
-git switch -c feature/e2e-spec
+git switch -c feature/pwa-icons
+# public/icons/icon-192.png と icon-512.png を上書きしてから
+git add public/icons
+git commit -m "feat: PWA アイコンを本物に差し替え"
 ```
 
 - [x] 1. 要件定義（→ [`docs/specs/`](../specs/README.md)。画面遷移図が必要な場合は [`docs/diagrams.md`](../diagrams.md) の手順に従いmermaidで描く）
@@ -63,8 +66,8 @@ git switch -c feature/e2e-spec
   - [x] 8-5. `battle` の画面：`BattleSession` → ホーム → バトル → 結果、サウンド（2026-10-09。→ [履歴](history/2026-10.md#2026-10-09-battleモジュールの画面)）
   - [x] 8-6. `boss` の画面：ボス図鑑（2026-10-09。→ [履歴](history/2026-10.md#2026-10-09-bossモジュールのボス図鑑の画面)）
   - [x] 8-7. PWA：manifest・Service Worker・オフライン用ページ（2026-10-09。→ [履歴](history/2026-10.md#2026-10-09-pwa)）
-- [ ] 9. 画面テスト（必要かどうかを判断する。必要な場合は [`create-unit-test-spec`](../skills/create-unit-test-spec.md) でテスト仕様書を作成したうえで [`playwright-evidence-test`](../skills/playwright-evidence-test.md) を行う）
-- [ ] 10. ユーザテスト（必要かどうかを判断する）
+- [ ] 9. 画面テスト（2026-10-09 オーナー判断でいったん省略。気が向いたら行う。必要かどうかを判断する。必要な場合は [`create-unit-test-spec`](../skills/create-unit-test-spec.md) でテスト仕様書を作成したうえで [`playwright-evidence-test`](../skills/playwright-evidence-test.md) を行う）
+- [ ] 10. ユーザテスト（2026-10-09 オーナー自身が実施する。アイコン差し替えのあとに行う。見つかった不具合・要望は結果を見て TODO に起こす）
 
 ## 残っているタスク
 
