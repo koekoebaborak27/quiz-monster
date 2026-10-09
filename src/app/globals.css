@@ -44,6 +44,57 @@
       transform: translateX(2px);
     }
   }
+
+  /* 正解のダメージ数字を、大きく弾ませながら出す動き。 */
+  --animate-damage-pop: damage-pop 1s ease-out forwards;
+  @keyframes damage-pop {
+    0% {
+      transform: scale(0.3) rotate(-8deg);
+      opacity: 0;
+    }
+    20% {
+      transform: scale(1.5) rotate(4deg);
+      opacity: 1;
+    }
+    35% {
+      transform: scale(1) rotate(0deg);
+    }
+    80% {
+      transform: scale(1.05) translateY(-8px);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1.05) translateY(-16px);
+      opacity: 0;
+    }
+  }
+
+  /* 「とどめをさせ！」を画面全体に出し、しばらく見せてから消す動き。 */
+  --animate-finish-banner: finish-banner 1.8s ease-out forwards;
+  @keyframes finish-banner {
+    0% {
+      transform: scale(2.2);
+      opacity: 0;
+    }
+    15% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    25% {
+      transform: scale(1.1) rotate(-2deg);
+    }
+    35% {
+      transform: scale(1) rotate(2deg);
+    }
+    75% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 0;
+    }
+  }
 }
 
 body {
@@ -55,5 +106,21 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .animate-shake {
     animation: none;
+  }
+  .animate-damage-pop {
+    animation: none;
+  }
+  .animate-finish-banner {
+    animation-duration: 1.8s;
+    animation-name: finish-banner-static;
+  }
+  @keyframes finish-banner-static {
+    0%,
+    75% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
   }
 }

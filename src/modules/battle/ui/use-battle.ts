@@ -23,9 +23,6 @@ import type { BattleAction, BattleEffect, BattleResult, BattleStart, BattleState
 /** 正解を見せてから次の問題へ進むまでの時間（ミリ秒）。 */
 const CORRECT_WAIT_MS = 1000;
 
-/** とどめの一撃を見せてから結果画面へ移るまでの時間（ミリ秒）。 */
-const FINISH_WAIT_MS = 2000;
-
 /**
  * バトル画面用のフック。画面は、返す状態を描画して操作を渡すだけにする。
  * 状態の計算は `battleReducer`、実行する処理の判断は `listEffects` に任せ、ここでは保存・音・時間待ち・出題APIの呼び出しを行う。
@@ -140,17 +137,17 @@ export function useBattle() {
     return () => controllerRef.current?.abort();
   }, [start, load, router]);
 
-  // 時間待ち。正解表示は約1秒で次の問題へ、とどめの一撃は約2秒で結果画面へ移る。画面を離れたら止める。
+  // 時間待ち。正解表示は約1秒で次の問題へ進む。画面を離れたら止める。
+  // とどめの一撃のあとは自動で移らず、「けっかをみる」ボタンで結果画面へ移る。
   useEffect(() => {
     if (state.phase === "correct") {
       const timer = setTimeout(() => send({ type: "correctShown" }), CORRECT_WAIT_MS);
       return () => clearTimeout(timer);
     }
-    if (state.phase === "finishing") {
-      const timer = setTimeout(() => router.replace("/result"), FINISH_WAIT_MS);
-      return () => clearTimeout(timer);
-    }
-  }, [state.phase, send, router]);
+  }, [state.phase, send]);
+
+  /** 「けっかをみる」を押したとき。結果画面へ移る。 */
+  const goResult = useCallback(() => router.replace("/result"), [router]);
 
   /** 選択肢を押したとき。 */
   const answer = useCallback((choiceId: ChoiceId) => send({ type: "answered", choiceId }), [send]);
@@ -174,5 +171,5 @@ export function useBattle() {
   /** 取得エラーで「ホームへ」を押したとき。 */
   const goHome = useCallback(() => router.replace("/"), [router]);
 
-  return { state, answer, acknowledge, retry, goHome };
+  return { state, answer, acknowledge, retry, goHome, goResult };
 }

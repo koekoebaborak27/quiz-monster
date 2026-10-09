@@ -40,6 +40,8 @@ export type BattleState = {
   reviewList: Question[];
   /** とどめの一撃で出す大きな数字（2問目に正解する直前の `hp`）。 */
   finishDamage: number;
+  /** 直前の正解で与えたダメージ（とどめの一撃以外）。正解表示のときにボスの前へ出す。 */
+  lastDamage: number;
 };
 
 /** バトル画面への操作。 */

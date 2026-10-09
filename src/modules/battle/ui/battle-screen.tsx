@@ -42,7 +42,7 @@ const SUB_BUTTON_CLASS =
 
 /** バトル画面。状態の描画と操作の受け渡しだけを行い、進行は useBattle に任せる。 */
 export function BattleScreen() {
-  const { state, answer, acknowledge, retry, goHome } = useBattle();
+  const { state, answer, acknowledge, retry, goHome, goResult } = useBattle();
 
   if (state.phase === "loading") {
     return (
@@ -79,7 +79,9 @@ export function BattleScreen() {
     );
   }
 
-  return <BattleBody state={state} onAnswer={answer} onAcknowledge={acknowledge} />;
+  return (
+    <BattleBody state={state} onAnswer={answer} onAcknowledge={acknowledge} onResult={goResult} />
+  );
 }
 
 /** バトル中（解答待ち・正解表示・不正解表示・とどめの一撃）の画面。 */
@@ -87,10 +89,12 @@ function BattleBody({
   state,
   onAnswer,
   onAcknowledge,
+  onResult,
 }: {
   state: BattleState;
   onAnswer: (choiceId: ChoiceId) => void;
   onAcknowledge: () => void;
+  onResult: () => void;
 }) {
   const { boss, phase } = state;
   const question = currentQuestion(state);
@@ -123,6 +127,20 @@ function BattleBody({
         <div className="mt-2">
           <BossCircle boss={boss} size={isWrong ? "sm" : "lg"} angry={angry} dimmed={isFinishing} />
         </div>
+        {phase === "correct" && (
+          // 正解したときのダメージ。問題ごとに作り直して、毎回はじめから動かす。
+          <div
+            key={state.slot}
+            className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center"
+          >
+            <span
+              aria-hidden="true"
+              className="animate-damage-pop text-5xl leading-none font-bold whitespace-nowrap text-finish [text-shadow:0_0_12px_var(--color-hp),0_3px_0_var(--color-hp),0_0_2px_#000]"
+            >
+              {state.lastDamage}ダメージ！
+            </span>
+          </div>
+        )}
         {isFinishing && (
           <div className="absolute inset-0 flex flex-col items-center justify-center">
             <span className="text-sm text-combo">とどめの一撃！</span>
@@ -189,6 +207,42 @@ function BattleBody({
           />
         ))}
       </div>
+
+      {isFinishing && (
+        <button
+          type="button"
+          onClick={onResult}
+          className={cn(SUB_BUTTON_CLASS, "mt-3 border-primary bg-primary text-white")}
+        >
+          けっかをみる
+        </button>
+      )}
+
+      {phase === "answering" && state.slot === 3 && !state.isRetry && (
+        // とどめ問題に入った合図。画面全体に出して、動きが終わると自然に消える。触っても邪魔にならない。
+        <div
+          key="finish-banner"
+          aria-hidden="true"
+          className="animate-finish-banner pointer-events-none fixed inset-0 z-50 flex items-center justify-center bg-black/60"
+        >
+          <span className="text-[min(12vw,4.5rem)] font-black whitespace-nowrap text-finish [text-shadow:0_0_20px_var(--color-hp),0_4px_0_var(--color-hp),0_0_3px_#000]">
+            とどめをさせ！
+          </span>
+        </div>
+      )}
+
+      {isFinishing && (
+        // ボスを倒した合図。画面全体に出して、動きが終わると自然に消える。触っても邪魔にならない。
+        <div
+          key="victory-banner"
+          aria-hidden="true"
+          className="animate-finish-banner pointer-events-none fixed inset-0 z-50 flex items-center justify-center bg-black/60"
+        >
+          <span className="text-[min(14vw,5rem)] font-black whitespace-nowrap text-finish [text-shadow:0_0_20px_var(--color-hp),0_4px_0_var(--color-hp),0_0_3px_#000]">
+            ボス撃破！
+          </span>
+        </div>
+      )}
 
       {isWrong && (
         <>
