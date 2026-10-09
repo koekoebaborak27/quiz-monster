@@ -16,7 +16,7 @@
 | 結果 | `/result` | バトルの結果と、勝ち方の評価を表示する |
 | ボス図鑑 | `/zukan` | 倒したボスと撃破回数を見る |
 
-画面はまだ実装していません（いまは仮のトップページだけです）。サーバー側の出題API（`POST /api/questions`）と progress モジュールの localStorage 読み書きは実装済みですが、画面からはまだ利用していません。画面の配置は [`docs/specs/mock/screens.html`](docs/specs/mock/screens.html)、仕様は [`docs/specs/`](docs/specs/README.md) にあります。
+画面はまだ実装していません（いまは仮のトップページだけです）。サーバー側の出題API（`POST /api/questions`）と progress モジュールの localStorage 読み書きと boss モジュールのボス一覧・選び方・枠ランクの判定は実装済みですが、画面からはまだ利用していません。画面の配置は [`docs/specs/mock/screens.html`](docs/specs/mock/screens.html)、仕様は [`docs/specs/`](docs/specs/README.md) にあります。
 
 ## セットアップ
 

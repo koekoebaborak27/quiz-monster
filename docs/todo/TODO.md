@@ -34,10 +34,10 @@
 **次のセッションが最初に打つコマンドまで具体的に書く。**
 
 ```powershell
-# 8. 実装の順番の 3 番目（boss モジュール：ボス一覧・ボスの選び方・枠ランクの判定。画面以外）から始める
+# 8. 実装の順番の 4 番目（battle の計算部分：battle-reducer.ts・scoring.ts・api-client.ts）から始める
 git switch main
 git pull
-git switch -c feature/boss
+git switch -c feature/battle-logic
 ```
 
 - [x] 1. 要件定義（→ [`docs/specs/`](../specs/README.md)。画面遷移図が必要な場合は [`docs/diagrams.md`](../diagrams.md) の手順に従いmermaidで描く）
@@ -58,7 +58,7 @@ git switch -c feature/boss
 - [ ] 8. 実装・単体ロジックテスト（1機能ずつ、[実装の順番](../specs/03_detail-design/README.md#実装の順番)に従う。→ [`create-vitest-test`](../skills/create-vitest-test.md)）
   - [x] 8-1. `quiz`：問題データの読み込み・出題の選び方・入力の検証・出題API（2026-10-08。→ [履歴](history/2026-10.md#2026-10-08-quizモジュールと出題apiの実装)）
   - [x] 8-2. `progress`：保存データの読み書き（2026-10-08。→ [履歴](history/2026-10.md#2026-10-08-progressモジュールと保存データの読み書き)）
-  - [ ] 8-3. `boss`：ボス一覧・ボスの選び方・枠ランクの判定（画面以外）
+  - [x] 8-3. `boss`：ボス一覧・ボスの選び方・枠ランクの判定（画面以外）（2026-10-09。→ [履歴](history/2026-10.md#2026-10-09-bossモジュールのボス一覧選び方枠ランク)）
   - [ ] 8-4. `battle` の計算部分：`battle-reducer.ts`・`scoring.ts`・`api-client.ts`
   - [ ] 8-5. `battle` の画面：`BattleSession` → ホーム → バトル → 結果、サウンド
   - [ ] 8-6. `boss` の画面：ボス図鑑
@@ -85,6 +85,7 @@ git switch -c feature/boss
 | ローカル環境 | 構築済み（`pnpm dev` で http://localhost:3000 に仮のトップページが出る） |
 | 出題API | 実装済み（`POST /api/questions`。画面は未実装） |
 | 保存データ（progress） | 実装済み（localStorage の読み書き。画面からはまだ使っていない） |
+| ボス（boss） | 画面以外は実装済み（ボス一覧・`pickBoss`・`getRank`・`getZukanNotice`。図鑑の画面は未実装） |
 | 本番 | 未構築 |
 
 ## 完了済みの作業
