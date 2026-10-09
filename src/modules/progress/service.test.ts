@@ -143,6 +143,26 @@ describe("progress/service の各記録更新", () => {
   });
 });
 
+describe("progress/service resetZukan", () => {
+  describe("図鑑をリセットするとき", () => {
+    it("撃破回数とパーフェクト回数だけを空にし、他の記録は残す", async () => {
+      useStorage();
+      const service = await loadService();
+      service.recordFirstAnswer("q1", false);
+      service.setSoundOn(false);
+      service.recordBattleWin("ukkari-tako", true);
+
+      service.resetZukan();
+
+      const progress = service.loadProgress();
+      expect(progress.bossKills).toEqual({});
+      expect(progress.perfectCount).toBe(0);
+      expect(progress.wrongIds).toEqual(["q1"]);
+      expect(progress.soundOn).toBe(false);
+    });
+  });
+});
+
 describe("progress/service 保存に失敗したとき", () => {
   describe("読み込みに失敗するとき", () => {
     it("メモリ上の記録を保ち、保存不可を返す", async () => {
