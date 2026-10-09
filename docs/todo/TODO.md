@@ -27,18 +27,20 @@
 | 3. 基本設計     | 3 / 3 |
 | 4. 詳細設計     | 1 / 1 |
 | 5. 設計のレビュー  | 1 / 1 |
-| 6〜10        | 3 / 5 |
+| 6〜10        | 5 / 5 |
 
 ## 次にやること
 
 **次のセッションが最初に打つコマンドまで具体的に書く。**
 
 ```powershell
-# 10. ユーザテスト（オーナーが実施）。先に、アイコン差し替えの PR がマージ済みであること
+# Vercel へデプロイするため、先に main を最新にして、ビルドが通ることを確認する
 git switch main
 git pull
-pnpm dev
+pnpm build
 ```
+
+次の順に進める：Vercel へデプロイ → 実機でホーム画面に追加・機内モードを確認（下の「残っているタスク」）。
 
 - [x] 1. 要件定義（→ [`docs/specs/`](../specs/README.md)。画面遷移図が必要な場合は [`docs/diagrams.md`](../diagrams.md) の手順に従いmermaidで描く）
   - [x] 1-0. 草案の作成（→ [`草案.md`](../specs/01_requirements/草案.md)）
@@ -63,17 +65,17 @@ pnpm dev
   - [x] 8-5. `battle` の画面：`BattleSession` → ホーム → バトル → 結果、サウンド（2026-10-09。→ [履歴](history/2026-10.md#2026-10-09-battleモジュールの画面)）
   - [x] 8-6. `boss` の画面：ボス図鑑（2026-10-09。→ [履歴](history/2026-10.md#2026-10-09-bossモジュールのボス図鑑の画面)）
   - [x] 8-7. PWA：manifest・Service Worker・オフライン用ページ（2026-10-09。→ [履歴](history/2026-10.md#2026-10-09-pwa)）
-- [ ] 9. 画面テスト（2026-10-09 オーナー判断でいったん省略。気が向いたら行う。必要かどうかを判断する。必要な場合は [`create-unit-test-spec`](../skills/create-unit-test-spec.md) でテスト仕様書を作成したうえで [`playwright-evidence-test`](../skills/playwright-evidence-test.md) を行う）
-- [ ] 10. ユーザテスト（2026-10-09 オーナー自身が実施する。見つかった不具合・要望は結果を見て TODO に起こす）
+- [x] 9. 画面テスト（2026-10-09 オーナー判断で省略し、不要と確定）→ [履歴](history/2026-10.md#2026-10-09-画面テストの省略とユーザーテストへ)
+- [x] 10. ユーザテスト（2026-10-09 オーナーが実施し、問題なし）→ [履歴](history/2026-10.md#2026-10-09-eslint-10-への更新とブランチ保護の見送り)
 
 ## 残っているタスク
 
 いずれも**期限のない宿題**。判断材料は各リンク先にまとめる。
 
-- [ ] 本番ビルドを実機（スマホの Chrome など）で開き、ホーム画面に追加できること・機内モードで開くと「インターネットにつないでね」が出ることを確かめる
+- [ ] Vercel へデプロイし、本番の URL を実機（スマホの Chrome など）で開いて、ホーム画面に追加できること・機内モードで開くと「インターネットにつないでね」が出ることを確かめる（オーナーが実施）
 
-- [ ] ESLint を 10 へ上げる。9 系はサポートが終わっている（`pnpm install` で `deprecated eslint@9` の警告が出る）。`eslint-config-next`・`typescript-eslint` も合わせて上げる必要があるので、単独の PR にする
-- [ ] `main` のブランチ保護ルールを設定する（いまは未設定。→ [履歴](history/2026-10.md#2026-10-08-gitリポジトリの作成)）
+- [x] ESLint を 10 へ上げる（2026-10-09。本リポジトリはマージ済み、テンプレート側もオーナーが反映済み）→ [履歴](history/2026-10.md#2026-10-09-eslint-10-への更新とブランチ保護の見送り)
+- [ ] （見送り中）`main` のブランチ保護ルールを設定する。2026-10-09 に今回は見送りと決めた。方針と画面の場所 → [履歴](history/2026-10.md#2026-10-09-eslint-10-への更新とブランチ保護の見送り)
 
 ## 現在の状態
 
@@ -82,15 +84,16 @@ pnpm dev
 | 項目 | 状態 |
 | --- | --- |
 | git 管理 | 作成済み（GitHub `koekoebaborak27/quiz-monster`、公開リポジトリ。`git remote -v` で確認） |
-| 作業ブランチ | `main` のみ（`git branch -a` で確認） |
+| 作業ブランチ | `main` と、マージ済みの `chore/eslint-10`（`git branch -a` で確認） |
 | CI | `main` で成功（`gh run list --limit 1` で確認） |
 | ローカル環境 | 構築済み（`pnpm dev` で http://localhost:3000 に仮のトップページが出る） |
 | 出題API | 実装済み（`POST /api/questions`。バトル画面から呼んでいる） |
 | 保存データ（progress） | 実装済み（localStorage の読み書き。ホーム・バトル画面から使っている） |
 | ボス（boss） | 実装済み（ボス一覧・`pickBoss`・`getRank`・`getZukanNotice`・`countDefeatedBosses`・`BossCircle`）。ボス図鑑の画面（`BossZukanScreen`・`/zukan`）も実装済み |
-| バトルの画面（battle） | ホーム（`/`）・バトル（`/battle`）・結果（`/result`）・音を実装済み。ブラウザで通しで遊べる（PWA は未実装） |
+| バトルの画面（battle） | ホーム（`/`）・バトル（`/battle`）・結果（`/result`）・音を実装済み。ブラウザで通しで遊べる |
 | デザインの土台 | Tailwind v4・`globals.css`（色の正本）・`cn()`・`lucide-react`・`next/font` を導入済み |
 | PWA | manifest・`public/sw.js`・`public/offline.html`・アイコン（オーナーが用意した絵。元画像は `docs/specs/mock/pwa-app-icon-monster-star-question.png`）を実装済み。`sw.js` は単体テストで確認。実機での登録・オフライン表示は未確認 |
+| ESLint | 10.12.0 に更新済み（`main` に反映済み。`pnpm ls eslint` で確認） |
 | 本番 | 未構築 |
 
 ## 完了済みの作業
@@ -106,3 +109,5 @@ pnpm dev
 | 設計のレビュー | 1 | [`2026-10.md`](history/2026-10.md) |
 | git リポジトリ作成 | 1 | [`2026-10.md`](history/2026-10.md) |
 | ローカル環境構築 | 1 | [`2026-10.md`](history/2026-10.md) |
+| 実装・単体ロジックテスト | 7 | [`2026-10.md`](history/2026-10.md) |
+| 画面テスト（不要と確定）・ユーザテスト | 2 | [`2026-10.md`](history/2026-10.md) |
