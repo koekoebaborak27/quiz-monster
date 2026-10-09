@@ -75,6 +75,7 @@ git pull
 - [x] Node.js を 22 から 24 へ上げ、`.nvmrc`・`engines`・CI・本番を揃える（2026-10-09。→ [履歴](history/2026-10.md#2026-10-09-nodejs-を-24-へ更新)）
 
 - [x] ESLint を 10 へ上げる（2026-10-09。本リポジトリはマージ済み、テンプレート側もオーナーが反映済み）→ [履歴](history/2026-10.md#2026-10-09-eslint-10-への更新とブランチ保護の見送り)
+- [x] ボス図鑑に「図鑑をリセット」ボタンを追加する（2026-10-09。→ [履歴](history/2026-10.md#2026-10-09-ボス図鑑に図鑑をリセットボタンを追加)）
 - [ ] （見送り中）`main` のブランチ保護ルールを設定する。2026-10-09 に今回は見送りと決めた。方針と画面の場所 → [履歴](history/2026-10.md#2026-10-09-eslint-10-への更新とブランチ保護の見送り)
 
 ## 現在の状態
@@ -89,7 +90,7 @@ git pull
 | ローカル環境 | 構築済み（`pnpm dev` で http://localhost:3000 に仮のトップページが出る） |
 | 出題API | 実装済み（`POST /api/questions`。バトル画面から呼んでいる） |
 | 保存データ（progress） | 実装済み（localStorage の読み書き。ホーム・バトル画面から使っている） |
-| ボス（boss） | 実装済み（ボス一覧・`pickBoss`・`getRank`・`getZukanNotice`・`countDefeatedBosses`・`BossCircle`）。ボス図鑑の画面（`BossZukanScreen`・`/zukan`）も実装済み |
+| ボス（boss） | 実装済み（ボス一覧・`pickBoss`・`getRank`・`getZukanNotice`・`countDefeatedBosses`・`BossCircle`）。ボス図鑑の画面（`BossZukanScreen`・`/zukan`。「図鑑をリセット」ボタン付き）も実装済み |
 | バトルの画面（battle） | ホーム（`/`）・バトル（`/battle`）・結果（`/result`）・音を実装済み。ブラウザで通しで遊べる |
 | デザインの土台 | Tailwind v4・`globals.css`（色の正本）・`cn()`・`lucide-react`・`next/font` を導入済み |
 | PWA | manifest・`public/sw.js`・`public/offline.html`・アイコン（オーナーが用意した絵。元画像は `docs/specs/mock/pwa-app-icon-monster-star-question.png`）を実装済み。`sw.js` は単体テストで確認。実機での登録・オフライン表示は未確認 |
