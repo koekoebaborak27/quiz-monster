@@ -5,6 +5,7 @@ export {
   recordLastBoss,
   recordBattleWin,
   removeWrongIds,
+  resetZukan,
   setSoundOn,
   isStorageAvailable,
 } from "./service";

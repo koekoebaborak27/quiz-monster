@@ -108,6 +108,14 @@ export function recordBattleWin(bossId: string, isPerfect: boolean): void {
   }));
 }
 
+/**
+ * ボス図鑑の記録（ボスごとの撃破回数とパーフェクト勝利の回数）を空にする。
+ * まちがえた問題やサウンド設定など、図鑑に関係しない記録はそのまま残す。
+ */
+export function resetZukan(): void {
+  updateProgress((progress) => ({ ...progress, bossKills: {}, perfectCount: 0 }));
+}
+
 /** 出題元に存在しなかった問題IDを、間違いの記録から取り除く。 */
 export function removeWrongIds(ids: string[]): void {
   const removed = new Set(ids);

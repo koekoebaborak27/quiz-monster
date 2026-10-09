@@ -3,7 +3,7 @@
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { loadProgress } from "@/modules/progress";
+import { loadProgress, resetZukan } from "@/modules/progress";
 import type { Progress } from "@/modules/progress";
 import { cn } from "@/shared/ui/utils";
 import { BOSSES } from "../data/bosses";
@@ -36,6 +36,14 @@ export function BossZukanScreen() {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setProgress(loadProgress());
   }, []);
+
+  // 確認で「OK」が選ばれたときだけ図鑑を空にし、空になった記録を読み直して画面へ反映する。
+  // 子どもの押し間違いで記録が消えないよう、必ず一度たずねる。
+  function handleReset() {
+    if (!window.confirm("図鑑を空にします。本当によろしいですか？")) return;
+    resetZukan();
+    setProgress(loadProgress());
+  }
 
   const entries = buildZukanEntries(BOSSES, progress?.bossKills ?? {});
   const defeated = countDefeatedBosses(
@@ -104,6 +112,14 @@ export function BossZukanScreen() {
           </li>
         ))}
       </ul>
+
+      <button
+        type="button"
+        onClick={handleReset}
+        className="mx-auto mt-6 min-h-11 rounded-xl px-4 text-xs text-fg-muted underline focus-visible:ring-2 focus-visible:ring-label focus-visible:outline-none"
+      >
+        図鑑をリセット
+      </button>
     </main>
   );
 }
