@@ -34,10 +34,10 @@
 **次のセッションが最初に打つコマンドまで具体的に書く。**
 
 ```powershell
-# 8. 実装の順番の 6 番目（boss の画面：ボス図鑑）から始める。8-5 の PR がマージ済みであること
+# 8. 実装の順番の 7 番目（PWA：manifest・Service Worker・オフライン用ページ）から始める。8-6 の PR がマージ済みであること
 git switch main
 git pull
-git switch -c feature/boss-zukan
+git switch -c feature/pwa
 ```
 
 - [x] 1. 要件定義（→ [`docs/specs/`](../specs/README.md)。画面遷移図が必要な場合は [`docs/diagrams.md`](../diagrams.md) の手順に従いmermaidで描く）
@@ -61,7 +61,7 @@ git switch -c feature/boss-zukan
   - [x] 8-3. `boss`：ボス一覧・ボスの選び方・枠ランクの判定（画面以外）（2026-10-09。→ [履歴](history/2026-10.md#2026-10-09-bossモジュールのボス一覧選び方枠ランク)）
   - [x] 8-4. `battle` の計算部分：`battle-reducer.ts`・`scoring.ts`・`api-client.ts`（2026-10-09。→ [履歴](history/2026-10.md#2026-10-09-battleモジュールの計算部分)）
   - [x] 8-5. `battle` の画面：`BattleSession` → ホーム → バトル → 結果、サウンド（2026-10-09。→ [履歴](history/2026-10.md#2026-10-09-battleモジュールの画面)）
-  - [ ] 8-6. `boss` の画面：ボス図鑑
+  - [x] 8-6. `boss` の画面：ボス図鑑（2026-10-09。→ [履歴](history/2026-10.md#2026-10-09-bossモジュールのボス図鑑の画面)）
   - [ ] 8-7. PWA：manifest・Service Worker・オフライン用ページ
 - [ ] 9. 画面テスト（必要かどうかを判断する。必要な場合は [`create-unit-test-spec`](../skills/create-unit-test-spec.md) でテスト仕様書を作成したうえで [`playwright-evidence-test`](../skills/playwright-evidence-test.md) を行う）
 - [ ] 10. ユーザテスト（必要かどうかを判断する）
@@ -85,7 +85,7 @@ git switch -c feature/boss-zukan
 | ローカル環境 | 構築済み（`pnpm dev` で http://localhost:3000 に仮のトップページが出る） |
 | 出題API | 実装済み（`POST /api/questions`。バトル画面から呼んでいる） |
 | 保存データ（progress） | 実装済み（localStorage の読み書き。ホーム・バトル画面から使っている） |
-| ボス（boss） | 実装済み（ボス一覧・`pickBoss`・`getRank`・`getZukanNotice`・`countDefeatedBosses`・`BossCircle`）。図鑑の画面（`/zukan`）は未実装で、ホームから押すと 404 |
+| ボス（boss） | 実装済み（ボス一覧・`pickBoss`・`getRank`・`getZukanNotice`・`countDefeatedBosses`・`BossCircle`）。ボス図鑑の画面（`BossZukanScreen`・`/zukan`）も実装済み |
 | バトルの画面（battle） | ホーム（`/`）・バトル（`/battle`）・結果（`/result`）・音を実装済み。ブラウザで通しで遊べる（PWA は未実装） |
 | デザインの土台 | Tailwind v4・`globals.css`（色の正本）・`cn()`・`lucide-react`・`next/font` を導入済み |
 | 本番 | 未構築 |
