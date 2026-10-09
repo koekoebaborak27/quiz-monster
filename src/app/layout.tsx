@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Noto_Sans_JP } from "next/font/google";
 import type { ReactNode } from "react";
 import { BattleSessionProvider } from "@/modules/battle";
+import { ServiceWorkerRegister } from "@/shared/ui/service-worker-register";
 import "./globals.css";
 
 // 画面全体の文字。太さは「普通」と「太字（font-medium）」の2種類だけ使う（DESIGN.md）。
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className="font-sans">
         {/* 画面をまたいで、バトルの条件・結果・先読みした問題を受け渡す。 */}
         <BattleSessionProvider>{children}</BattleSessionProvider>
+        <ServiceWorkerRegister />
       </body>
     </html>
   );
