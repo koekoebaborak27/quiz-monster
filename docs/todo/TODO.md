@@ -34,13 +34,10 @@
 **次のセッションが最初に打つコマンドまで具体的に書く。**
 
 ```powershell
-# オーナーが PWA アイコンを差し替える（コード変更なので PR にする）。192×192 と 512×512 の PNG を同じ名前で置く
+# 10. ユーザテスト（オーナーが実施）。先に、アイコン差し替えの PR がマージ済みであること
 git switch main
 git pull
-git switch -c feature/pwa-icons
-# public/icons/icon-192.png と icon-512.png を上書きしてから
-git add public/icons
-git commit -m "feat: PWA アイコンを本物に差し替え"
+pnpm dev
 ```
 
 - [x] 1. 要件定義（→ [`docs/specs/`](../specs/README.md)。画面遷移図が必要な場合は [`docs/diagrams.md`](../diagrams.md) の手順に従いmermaidで描く）
@@ -67,13 +64,12 @@ git commit -m "feat: PWA アイコンを本物に差し替え"
   - [x] 8-6. `boss` の画面：ボス図鑑（2026-10-09。→ [履歴](history/2026-10.md#2026-10-09-bossモジュールのボス図鑑の画面)）
   - [x] 8-7. PWA：manifest・Service Worker・オフライン用ページ（2026-10-09。→ [履歴](history/2026-10.md#2026-10-09-pwa)）
 - [ ] 9. 画面テスト（2026-10-09 オーナー判断でいったん省略。気が向いたら行う。必要かどうかを判断する。必要な場合は [`create-unit-test-spec`](../skills/create-unit-test-spec.md) でテスト仕様書を作成したうえで [`playwright-evidence-test`](../skills/playwright-evidence-test.md) を行う）
-- [ ] 10. ユーザテスト（2026-10-09 オーナー自身が実施する。アイコン差し替えのあとに行う。見つかった不具合・要望は結果を見て TODO に起こす）
+- [ ] 10. ユーザテスト（2026-10-09 オーナー自身が実施する。見つかった不具合・要望は結果を見て TODO に起こす）
 
 ## 残っているタスク
 
 いずれも**期限のない宿題**。判断材料は各リンク先にまとめる。
 
-- [ ] PWA のアイコンを本物に差し替える。`public/icons/icon-192.png`（192×192）・`icon-512.png`（512×512、絵柄は中央の約8割）を同じ名前で置き換える。いまは仮の絵
 - [ ] 本番ビルドを実機（スマホの Chrome など）で開き、ホーム画面に追加できること・機内モードで開くと「インターネットにつないでね」が出ることを確かめる
 
 - [ ] ESLint を 10 へ上げる。9 系はサポートが終わっている（`pnpm install` で `deprecated eslint@9` の警告が出る）。`eslint-config-next`・`typescript-eslint` も合わせて上げる必要があるので、単独の PR にする
@@ -94,7 +90,7 @@ git commit -m "feat: PWA アイコンを本物に差し替え"
 | ボス（boss） | 実装済み（ボス一覧・`pickBoss`・`getRank`・`getZukanNotice`・`countDefeatedBosses`・`BossCircle`）。ボス図鑑の画面（`BossZukanScreen`・`/zukan`）も実装済み |
 | バトルの画面（battle） | ホーム（`/`）・バトル（`/battle`）・結果（`/result`）・音を実装済み。ブラウザで通しで遊べる（PWA は未実装） |
 | デザインの土台 | Tailwind v4・`globals.css`（色の正本）・`cn()`・`lucide-react`・`next/font` を導入済み |
-| PWA | manifest・`public/sw.js`・`public/offline.html`・アイコン（**仮の絵**。オーナーが用意する本物に差し替える）を実装済み。`sw.js` は単体テストで確認。実機での登録・オフライン表示は未確認 |
+| PWA | manifest・`public/sw.js`・`public/offline.html`・アイコン（オーナーが用意した絵。元画像は `docs/specs/mock/pwa-app-icon-monster-star-question.png`）を実装済み。`sw.js` は単体テストで確認。実機での登録・オフライン表示は未確認 |
 | 本番 | 未構築 |
 
 ## 完了済みの作業
