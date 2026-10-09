@@ -9,6 +9,7 @@ import type { Progress } from "@/modules/progress";
 import { cn } from "@/shared/ui/utils";
 import { REVENGE_UNLOCK_COUNT } from "../scoring";
 import { useBattleSession } from "../session";
+import { enableSound } from "../sound";
 import type { BattleStart } from "../types";
 
 /** 難易度ボタンの並び。「かんたん」だけを主ボタンにする（主ボタンは1画面に1つまで）。 */
@@ -51,7 +52,8 @@ export function HomeScreen() {
 
   /** バトルを始める。条件を BattleSession に置いて /battle へ移る。 */
   function start(condition: BattleStart) {
-    // TODO(区切り5): ここでサウンドを有効にする（ブラウザの制限で、必ずこのタップの中で行う）。
+    // ブラウザの制限（タップ前は音を鳴らせない）のため、必ずこのタップの中で音を有効にする。
+    enableSound();
     startBattle(condition);
     router.push("/battle");
   }
