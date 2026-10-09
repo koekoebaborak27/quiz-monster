@@ -7,6 +7,9 @@ export const BOSS_MAX_HP = 500;
 /** 最初のライフ。 */
 export const MAX_LIFE = 3;
 
+/** リベンジモードを遊べるようになる「まちがえた問題」の数。 */
+export const REVENGE_UNLOCK_COUNT = 5;
+
 /** 通常問題の正解1問で与えるダメージ。 */
 export const NORMAL_DAMAGE = 100;
 
