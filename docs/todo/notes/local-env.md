@@ -9,7 +9,7 @@
 
 ## 2026-10-08 バージョンの確認
 
-Node.js は `.nvmrc`（22）、pnpm は `package.json` の `packageManager`（10.15.1）に合わせる。
+Node.js は `.nvmrc`（24）、pnpm は `package.json` の `packageManager`（10.15.1）に合わせる。
 
 ```powershell
 node -v

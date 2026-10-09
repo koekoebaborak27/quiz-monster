@@ -20,7 +20,7 @@
 
 ## セットアップ
 
-Node.js は [`.nvmrc`](.nvmrc) のバージョン（22）を使います。pnpm は `package.json` の `packageManager` で指定したバージョン（10.15.1）を使います。
+Node.js は [`.nvmrc`](.nvmrc) のバージョン（24）を使います。pnpm は `package.json` の `packageManager` で指定したバージョン（10.15.1）を使います。
 
 ```bash
 pnpm install
